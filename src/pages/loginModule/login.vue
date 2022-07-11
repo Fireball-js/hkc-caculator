@@ -1,6 +1,7 @@
 <!-- 用户登录界面 -->
 <template>
-   <div class="login-bcg">
+  <div class="login-bcg">
+    <navBar />
     <div class="login-main">
       <!-- 用户头像 -->
       <div  class="login-user-pic">
@@ -32,16 +33,16 @@
   import axios from "axios"
   import{reactive,ref} from "vue"
   import{useRouter,useRoute} from "vue-router"
+  import navBar from "../navBar/navBar.vue"
 export default {
   name: 'LoginRegister',
-  
-  data(){
-const msg="用户注册登录页面，以及跳转权限管理页面"
-return{
+data(){
+  const msg="用户注册登录页面，以及跳转权限管理页面"
+  return{
   msg
-}
-  },
-
+  }
+},
+components:{navBar},
 setup(){
   const $router=useRouter()
   const $route=useRoute()
@@ -49,7 +50,7 @@ setup(){
   const status=ref(false)
   
   // 定义el-item表单需要的数据
- const form =reactive({
+  const form =reactive({
   username:"",
   password:"",
  })
@@ -107,7 +108,6 @@ const rules=reactive({
 .login-bcg{
   width: 100%;
   height: calc(100vh);
-  padding-top: 200px;
   box-sizing: border-box;
   background-image: linear-gradient(45deg, #b005ff,#01112b, #220392);
  
@@ -121,7 +121,9 @@ const rules=reactive({
   box-sizing: border-box;
   backdrop-filter: blur(100px);
   box-shadow: 0 0 20px 10px rgb(68, 15, 138);
-  background-image:url("@/assets/bcg1.png")
+  background-image:url("@/assets/bcg1.png");
+  position: relative;
+  top: 200px
 }
 .login-user-pic ,
 .login-user-pic img{

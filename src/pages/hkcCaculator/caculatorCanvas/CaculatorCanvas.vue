@@ -1,18 +1,16 @@
-<!-- 用户权限管理界面 -->
 <template>
  <div>
-  这里是caculator  
+    这里是canvas绘图
 </div>
 </template>
 <script>
  export default {
-name: 'HKC-caculator',
+name: 'caculator-cavas',
 data(){
  return {
-msg:'main page of caculator'
+msg:'map of data detail by cavas'
 }}
 }
  </script>
 <style scoped>
-
 </style>

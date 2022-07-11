@@ -3,7 +3,7 @@ export default [
     {
         path: '/',
         name: 'Login',
-        component: () => import('@/pages/loginModule/login/login.vue'),
+        component: () => import('@/pages/loginModule/login.vue'),
         meta: {
             "title": "用户登录"
         }
