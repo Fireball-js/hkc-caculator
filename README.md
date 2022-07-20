@@ -4,7 +4,7 @@ A demo in order to analysis Array glass issue of liquid crystal display
 
 Based on **Vue3, ElementUi, Pinia, Echarts**
 
-# HKC Caculator
+# The main part
 
 This demo give some solutions for analysis glass data in LCD Industrial which I have encountered
 
