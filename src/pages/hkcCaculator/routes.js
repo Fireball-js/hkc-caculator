@@ -28,7 +28,8 @@ export default [
                 name: "datacanvas",
                 component: () => import("@/pages/hkcCaculator/caculatorCanvas/CaculatorCanvas"),
                 meta: {
-                    "title": "数据canvas绘图页"
+                    "title": "数据canvas绘图页",
+                    "keepAlive": true
                 }
             },
             {

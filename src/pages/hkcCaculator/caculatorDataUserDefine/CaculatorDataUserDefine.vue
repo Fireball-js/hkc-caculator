@@ -9,7 +9,11 @@ name: 'caculator-Data-User-Define',
 data(){
  return {
 msg:'data modified by users'
-}}
+}},
+setup(){
+
+    
+}
 }
  </script>
 <style scoped>
