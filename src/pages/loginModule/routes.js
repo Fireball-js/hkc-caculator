@@ -25,5 +25,14 @@ export default [
         meta: {
             "title": "用户权限管理"
         }
+    },
+    //用户登录跳转信息提示
+    {
+        path: '/info',
+        name: 'info',
+        component: () => import('@/pages/loginModule/info/info.vue'),
+        meta: {
+            "title": "用户登录跳转"
+        }
     }
 ]

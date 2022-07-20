@@ -60,7 +60,8 @@ setup(){
   userLogin:function(){
     axios.post("http://localhost:8082/login",form).then((_d)=>{
       if(_d.data.loginStatus==true){
-        $router.push("/caculator")
+        document.cookie="token="+_d.data.token
+        $router.push("/hkccaculator")
       }
     })
   },

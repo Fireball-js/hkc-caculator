@@ -11,8 +11,14 @@ data(){
 msg:'data modified by users'
 }},
 setup(){
-
-    
+    document.cookie="aaa=123"
+    let aaa=document.cookie.split(";").map(i=>{
+        return i.split("=")
+    })
+    let bl=aaa.some(i=>{
+       return i.includes("token")
+    })
+    console.log(bl);
 }
 }
  </script>
