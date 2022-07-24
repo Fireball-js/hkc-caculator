@@ -8,7 +8,7 @@ Based on **Vue3, ElementUi, Pinia, Echarts**
 
 This demo give some solutions for analysis glass data in LCD Industrial which I have encountered
 
-Use command `npm run server`
+Use command `npm run serve`
 
 # Test Server
 
