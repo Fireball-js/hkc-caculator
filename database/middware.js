@@ -91,7 +91,6 @@ app.post("/login", jsonParser, (req, res) => {
         res.send({ loginStatus: true, "token": token })
     } else {
         res.send({ loginStatus: false })
-
     }
 })
 

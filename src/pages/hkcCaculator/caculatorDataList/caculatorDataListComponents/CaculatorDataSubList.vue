@@ -1,7 +1,8 @@
 <template>
  <div class="datalist-form"  v-if="refreshList">
-    <el-table :data="dataList" style="width: 100%">
+    <el-table :data="dataList" style="width: 100%" @selection-change="ChooseDataList" ref="dataTableRef">
       <el-table-column label="查询结果列表">
+        <el-table-column type="selection" width="55" />
         <el-table-column prop="time" label="时间" width="300" />
         <el-table-column prop="fileName" label="文件名称" width="300" />
         <el-table-column prop="eqName" label="测量设备" width="300" />
@@ -11,14 +12,18 @@
           <template #default="datalist">
             <el-button link type="primary" size="small" @click="dataDetailQuery(datalist.row.fileName)"
               >详细</el-button>
-            <el-button link type="primary" size="small">删除</el-button>
+            <!-- <el-button link type="primary" size="small">删除</el-button> -->
           </template>
         </el-table-column>
       </el-table>
+      <div style="margin-top: 20px">
+        <el-button @click="dataDetailListQuery">查询</el-button>
+        <el-button @click="resetChoose">重选</el-button>
+      </div>
 </div>
 </template>
 <script>
-import {  ref,watchEffect } from 'vue'
+import {  reactive, ref,watchEffect } from 'vue'
 import {useStore} from "@/store/index"
 import { useRouter } from 'vue-router'
 export default {
@@ -30,22 +35,48 @@ msg:'a list show data info'
 setup(){
   const store=useStore()
   const router=useRouter()
+  const dataTableRef=ref()
   const refreshList=ref(false)
+  const dataListChoosed=reactive([])
   let dataList=ref([])
   const methods={
+    //单个数据请求
     dataDetailQuery(_i){
-        store.dataDetailQuery(_i)
+      let _arr=[]
+      _arr.push(_i)
+        store.dataDetailQuery(_arr)
         router.push({name:"datadetail"})
+    },
+    // 多选框
+    ChooseDataList(val){
+      dataListChoosed.value=val
+      // console.log(dataListChoosed.value);
+    },
+    // 重选
+    resetChoose(){
+      dataTableRef.value.clearSelection()
+      // console.log(dataListChoosed);
+    },
+    //提交多个表单
+    dataDetailListQuery(){
+    let _arr = dataListChoosed.value.map((i)=>{
+      return i.fileName
+    })
+    console.log(_arr);
+    store.dataDetailQuery(_arr)
+    // router.push({name:"datadetail"})
     }
   }
     watchEffect(
       ()=>{
           dataList.value=store.dataList
           refreshList.value=store.refreshList
+          // console.log(store.dataList);
       })
   return {
     refreshList,
     dataList,
+    dataTableRef,
     ...methods
   }
 }

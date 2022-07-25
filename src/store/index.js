@@ -22,27 +22,29 @@ export const useStore = defineStore("main", {
                 let mon = new Date(i.time).getMonth() + 1
                 let day = new Date(i.time).getDate()
                 i.time = `${year}-${mon}-${day}`
-            })
+            });
             return _list
         },
         // 处理详细数据，数据单元加键
         dataDetail (state) {
-            let _detail = []
-            _detail = state.caculatorDataDetail.data
-            if (_detail != undefined) {
-                var _t = _detail.map((i) => {
-                    let _arr = {}
-                    for (let j = 0; j < i.length; j++) {
-                        _arr[j] = i[j]
-                    }
-                    return _arr
-                })
-                var title = _t.splice(0, 1)
-                var data = _t.splice(1)
-            }
-            return { title, data }
+            let _tem = state.caculatorDataDetail.map(_detail => {
+                if (_detail != undefined) {
+                    // 处理数据加键
+                    var _data = _detail[1].map((i) => {
+                        let _arr = {}
+                        for (let j = 0; j < i.length; j++) {
+                            _arr[j] = i[j]
+                        }
+                        return _arr
+                    })
+                    var subTitle = _data.splice(0, 1)
+                    var data = _data.splice(1)
+                    var title = _detail[0]
+                }
+                return [title, subTitle, data]
+            })
+            return _tem
         }
-
     },
     actions: {
         navbarMenuChange (_inx) {
@@ -75,10 +77,15 @@ export const useStore = defineStore("main", {
             })
 
         },
-        dataDetailQuery (_name) {
-            axios.post("http://localhost:8082/data/datadetail", { "fileName": _name })
+        dataDetailQuery (_list) {
+            axios.post("http://localhost:8082/data/datadetail", { "dataList": _list })
                 .then(res => {
-                    this.caculatorDataDetail = res.data[0]
+                    // 处理数据
+                    this.caculatorDataDetail = res.data.map((i) => {
+                        // 目前不需要其余sheet的数据，可修改
+                        return [i.title, i.data[0].data]
+                    })
+                    //切换侧栏路由
                     this.subnavIndex = "2"
                 })
         }

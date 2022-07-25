@@ -6,7 +6,7 @@ const bodyParser = require("body-parser")
 
 /***** bodyparser中间件设置，用于接收body*/
 var jsonParser = bodyParser.json()
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+// var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 //用于读取存储的数据并按前端的请求进行数据交互
 // 本地数据汇总
@@ -79,8 +79,8 @@ router.post("/datalist", jsonParser, (req, res) => {
     //   ]
     // }
     //****************
-    _d.condition.forEach(i => {
-        item = conditionCheck(_d.timeBefore, _d.timeAfter, i)
+    _d.condition.forEach(item => {
+        item = conditionCheck(_d.timeBefore, _d.timeAfter, item)
         if (item != []) {
             dataList = [...dataList, ...item]
         }
@@ -89,8 +89,13 @@ router.post("/datalist", jsonParser, (req, res) => {
 })
 //单个详细数据
 router.post("/datadetail", jsonParser, (req, res) => {
-    let fileName = req.body.fileName
-    let _result = readSingleFile(fileName)
+    let _result = []
+    let dataList = req.body.dataList
+    _result = dataList.map((i) => {
+        console.log(i);
+        return { "title": i, "data": readSingleFile(i) }
+    })
+    console.log(_result);
     res.send(_result)
 })
 module.exports = { router }

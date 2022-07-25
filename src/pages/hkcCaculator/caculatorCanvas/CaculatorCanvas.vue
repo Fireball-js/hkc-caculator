@@ -4,7 +4,6 @@
    <div ref="vNode" class="cacl-canvas"></div>
    <div class="cacl-canvas-option">
     <input v-show="!ifDraw" type="text" v-model="step" placeholder="请输入步长值" @blur="refreshCanvas">
-    <span  v-show="ifDraw">没有数据</span>
   </div>
 </div>
 </template>
@@ -209,13 +208,5 @@ setup(){
       position:absolute;
       bottom: 7%;
       left: 45%
-    }
-    .cacl-canvas-option span{
-      position: absolute;
-      bottom: 50%;
-      left: 48%;
-      font-size: 20px;
-      color: rgba(240, 240, 240, 0.7);
-
     }
 </style>

@@ -10,7 +10,7 @@ export default [
             {
                 path: "datadetail",
                 name: "datadetail",
-                component: () => import("@/pages/hkcCaculator/caculatorDataDetail/CaculatorDataDetail"),
+                component: () => import("@/pages/hkcCaculator/caculatorDataDetail/CaculatorDataDetailList"),
                 meta: {
                     "title": "数据详情页"
                 }
