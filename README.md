@@ -1,24 +1,19 @@
 # hkc-caculator
 
-## Project setup
-```
-npm install
-```
+A demo in order to analysis Array glass issue of liquid crystal display
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Based on **Vue3, ElementUi, Pinia, Echarts**
 
-### Compiles and minifies for production
-```
-npm run build
-```
+# The main part
 
-### Lints and fixes files
-```
-npm run lint
-```
+This demo give some solutions for analysis glass data in LCD Industrial which I have encountered
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Use command `npm run serve`
+
+# Test Server
+
+You can use a demo server which in the file ***datebase***
+
+Use command `node run middleware.js` to open the server
+
+It provides some fake data to test the *caculator demo*
