@@ -29,9 +29,9 @@ setup(props,context){
     // const router=useRouter()
     const dataTitle=reactive(context.attrs.dataDetail[1])
     const dataDetail=reactive(context.attrs.dataDetail[2])
-    console.log(context.attrs.dataDetail);
-    console.log(dataTitle);
-    console.log(dataDetail.value);
+    // console.log(context.attrs.dataDetail);
+    // console.log(dataTitle);
+    // console.log(dataDetail.value);
     const methods={
         test(){
             console.log(dataDetail);
@@ -48,7 +48,7 @@ setup(props,context){
 <style scoped>
 .data-detail-main{
     width: 1000px;
-    margin: 100px 200px
+    margin:  auto
 
 }
 </style>

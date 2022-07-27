@@ -92,10 +92,10 @@ router.post("/datadetail", jsonParser, (req, res) => {
     let _result = []
     let dataList = req.body.dataList
     _result = dataList.map((i) => {
-        console.log(i);
+        // console.log(i);
         return { "title": i, "data": readSingleFile(i) }
     })
-    console.log(_result);
+    // console.log(_result);
     res.send(_result)
 })
 module.exports = { router }

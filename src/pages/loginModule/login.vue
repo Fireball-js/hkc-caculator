@@ -32,6 +32,7 @@
 <script scoped>
   import axios from "axios"
   import{reactive,ref} from "vue"
+  import {useStore} from "@/store/index"
   import{useRouter,useRoute} from "vue-router"
   import navBar from "../navBar/navBar.vue"
 export default {
@@ -46,6 +47,7 @@ components:{navBar},
 setup(){
   const $router=useRouter()
   const $route=useRoute()
+  const store=useStore()
   const portraitUrl=ref("@/assets/portrait.png")
   const status=ref(false)
   
@@ -61,7 +63,9 @@ setup(){
     axios.post("http://localhost:8082/login",form).then((_d)=>{
       if(_d.data.loginStatus==true){
         document.cookie="token="+_d.data.token
-        $router.push("/hkccaculator")
+        store.navbarActiveIndex="2"
+        store.subnavIndex="3"
+        $router.push("/hkccaculator/datalist")
       }
     })
   },

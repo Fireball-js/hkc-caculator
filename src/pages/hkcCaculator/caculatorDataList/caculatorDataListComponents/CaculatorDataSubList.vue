@@ -26,6 +26,7 @@
 import {  reactive, ref,watchEffect } from 'vue'
 import {useStore} from "@/store/index"
 import { useRouter } from 'vue-router'
+import { ElNotification } from 'element-plus'
 export default {
 name: 'data-list',
 data(){
@@ -59,12 +60,23 @@ setup(){
     },
     //提交多个表单
     dataDetailListQuery(){
-    let _arr = dataListChoosed.value.map((i)=>{
-      return i.fileName
-    })
-    console.log(_arr);
-    store.dataDetailQuery(_arr)
-    // router.push({name:"datadetail"})
+      if(dataListChoosed.value){
+        let _arr = dataListChoosed.value.map((i)=>{
+          return i.fileName
+        })
+         // console.log(_arr);
+        store.dataDetailQuery(_arr)
+        router.push({name:"datadetail"})
+      }else{
+        ElNotification({
+                title: '错误',
+                message: '请选择查询的数据',
+                showClose: false,
+                duration:2500,
+                type: 'error',
+        })
+      }
+   
     }
   }
     watchEffect(
@@ -95,4 +107,5 @@ setup(){
 .datalist-form .el-table{
     border-radius: 20px
 }
+
 </style>

@@ -52,7 +52,9 @@
                <p>产品列表</p>
                <span v-for="i in dataP" :key="i">{{i}}</span>
            </div>
-           <div class="datalist-update-btn" @click="requestDataList"><i>提交</i></div>
+           <div class="datalist-update-btn" @click="requestDataList($event)">
+             <el-icon><Promotion /></el-icon>
+           </div>
        </div>
    </div>
 </div>
@@ -92,14 +94,21 @@ setup(){
                 ifShowList.value=true
             }}
         },
-        requestDataList(){
+        requestDataList(e){
+            // 请求数据
             loading.value=true
             let _t=setTimeout(()=>{
                 loading.value=false
                 clearTimeout(_t)
             },1100)
-            store.requestDataList(dataQuery)
-        }
+                store.requestDataList(dataQuery)
+            //动画回调
+            let vNode=e.currentTarget
+            vNode.className="datalist-update-btn datalist-update-btn-fly"
+            vNode.addEventListener("webkitAnimationEnd",function(){
+                vNode.className="datalist-update-btn"
+            })
+        },
     }
     //表单选项
     //*********设备选项
@@ -206,17 +215,19 @@ setup(){
     border-radius: 15px;
     background-color: rgba(254, 255, 211, 0.3);
     display: flex;
+    position:relative;
     flex-wrap: wrap;
-    justify-content: space-between
-    
+    justify-content: space-between;
+    overflow: hidden
   }
   /* .datalist-date, .datalist-eq,.datalist-p{
 
   } */
   .datalist-update{
-      width: 80%;
-      background-color: rgba(224, 224, 224, 0.8);
-      margin: 20px 0px;
+      width: 100%;
+      color: white;
+      background-color: rgba(224, 224, 224, 0);
+      margin: 20px 0;
       padding: 20px ;
       display: flex;
       border-radius: 20px;
@@ -225,30 +236,84 @@ setup(){
   .datalist-update-eq,
   .datalist-update-p{
     width: 40%;
-    margin-left: 40px
+    margin-right: 120px
   }
   .datalist-update-btn{
-    width: 60px;
-    height: 100%;
-    /* border-left: 1px solid black; */
-    margin-left:20px;
-    padding-left:auto 20px;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    /* border: 1px solid black; */
     cursor: pointer;
-    position:relative;
-    border-radius: 0 20px 20px 0
+    right: 140px;
+    top: 240px;
+    position:absolute;
+    transform-origin:100% 100%;
+    transform: rotate(0deg);
   }
-  .datalist-update-btn i{
-    width: 50px;
-    margin:-10px 0 0 -5px;
-    font-style: normal;
-    position: absolute;
-    top: 50%;
-    left: 16%
-}
   .datalist-update-btn:hover{
-   background-color: rgb(203, 252, 252)
-    /* background-color: gray */
+    right: 140px;
+    top: 240px;
+    animation:btnShaking 0.05s linear 0s infinite alternate;
   }
+  .datalist-update-btn-fly{
+    animation:btnFlyX 2s linear 0s  1 normal,
+              btnFlyY 2s linear 0s  1 normal;
+  }
+  /*#region 按钮动画  */
+  @keyframes btnShaking {
+    /* 0%{
+        right: 140px;
+        top: 240px;
+        color: red;
+    }
+    25%{
+        right: 140px;
+        top: 236px;
+    }
+    50%{
+        right: 140px;
+        top: 244px;
+    }
+    75%{
+        right: 144px;
+        top: 240px;
+    }
+    100%{
+        right: 136px;
+        top: 240px;
+        color: white
+    } */
+    from{
+        right: 142px;
+        top:238px
+    }
+    to{
+        right: 138px;
+        top:242px
+    }
+  }
+  @keyframes btnFlyX {
+    0%{
+        right:140px;
+        transform: rotate(0deg);
+        transform-origin:300% 200%;
+    }
+    100%{
+        right:-20px;
+        transform: rotate(500deg);
+        transform-origin:130% 70%;
+
+    }
+  }
+  @keyframes btnFlyY {
+    0%{
+        top:240px
+    }
+    100%{
+        top:140px
+    }
+  }
+  /*#endregion   */
   .datalist-update p{
     margin:0;
     padding-bottom: 10px;

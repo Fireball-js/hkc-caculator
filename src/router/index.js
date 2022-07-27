@@ -28,12 +28,15 @@ const router = createRouter({
 })
 // 全局守卫检定是否登陆
 router.beforeEach((to, from, next) => {
-  let ifToken = document.cookie.split(";")
+  let _cookie = document.cookie.split(";")
     .map(i => {
       return i.split("=")
-    }).some(i => {
-      return i.includes("token")
     })
+  let ifToken = _cookie.some((i) => {
+    return i.some(j => {
+      return j.includes("token")
+    })
+  })
   // 判断是否在白名单中
   if (isRouterWhiteList(to.name)) {
     next()

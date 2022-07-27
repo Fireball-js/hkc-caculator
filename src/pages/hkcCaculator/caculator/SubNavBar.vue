@@ -34,7 +34,7 @@
 </template>
 <script>
 import {useStore} from "@/store/index"
-import { ref,watchEffect } from "vue"
+import { computed} from "vue"
 import {useRouter} from "vue-router"
 export default {
 name: 'sub-navbar',
@@ -43,28 +43,30 @@ data(){
     msg:'left sub nav bar for data change'
 }},
 setup(){
-    const router=  useRouter()
-    const store=  useStore()
-    const subnavIndex=  ref()
-
+    const router = useRouter()
+    const store = useStore()
+    const subnavIndex = computed(()=>{
+       return store.subnavIndex
+    }) 
     const methods={
         subnavSelect(_inx){
             _inx=_inx*1
             switch(_inx){
                 case(1):router.push({name:"datacanvas"})
+                store.subnavIndex=String(_inx) 
                 break;
                 case(2):router.push({name:"datadetail"})
+                store.subnavIndex=String(_inx) 
                 break;
                 case(3):router.push({name:"datalist"})
+                store.subnavIndex=String(_inx) 
                 break;
                 case(4):router.push({name:"datauserdefine"})
+                store.subnavIndex=String(_inx) 
                 break;
             }
         }
     }
-    watchEffect(()=>{
-        subnavIndex.value=store.subnavIndex
-    })
     return{
         subnavIndex,
         ...methods

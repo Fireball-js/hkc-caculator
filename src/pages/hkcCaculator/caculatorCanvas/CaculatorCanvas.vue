@@ -1,42 +1,45 @@
 <template>
  <div class="cacl-canvas-main">
-   <span class="cacl-canvas-name">{{canvasName}}</span>
-   <div ref="vNode" class="cacl-canvas"></div>
+   <span v-show="ifMapPlus" class="cacl-canvas-name">{{canvasName}}</span>
+   <div ref="vNode" class="cacl-canvas" ></div>
    <div class="cacl-canvas-option">
     <input v-show="!ifDraw" type="text" v-model="step" placeholder="请输入步长值" @blur="refreshCanvas">
   </div>
 </div>
 </template>
 <script>
-import{onActivated, ref} from "vue"
+import{onActivated,onMounted, ref} from "vue"
 import * as echarts from 'echarts';
-import {useStore} from "@/store/index"
 export default {
 name: 'caculator-cavas',
 data(){
  return {
 msg:'map of data detail by cavas'
 }},
-setup(){
+setup(props,context){
     const vNode=ref(null)
-    const store=useStore()
-    const step=ref()
+    const step=ref(10)
+    //判断是否渲染大图细节
+    const ifMapPlus=context.attrs.ifMapPlus
+    //判断是否有数据进行渲染
     const ifDraw=ref(false)
+    const detail = context.attrs.detail
     const canvasName=ref("")
     const methods={
       refreshCanvas(){
         methods.mapDrawCanvas()
+        console.log(context);
       },
       mapDrawCanvas(){
-        if(store.dataDetail.data){
+        if(detail[2]){
           // 设置名称
-          let _n=store.dataDetail.title
+          let _n=detail[1]
           canvasName.value=_n[0][1]+"-"+_n[0][2]+"-"+_n[0][3] 
         // 创建一个依赖于数据的热点图
         var myChart = echarts.init(vNode.value);
         var option;
         var axisData;
-          var mapData = store.dataDetail.data
+          var mapData = detail[2]
           .map(function (item) {
             return [item[2], item[1], item[3] || '-',item[0]];
           });
@@ -111,6 +114,7 @@ setup(){
         }
         option = {
           tooltip: {
+            show:ifMapPlus,
             position: 'top'
           },
           grid: {
@@ -122,15 +126,17 @@ setup(){
             type: 'category',
             data: axisData.xAxis,
             splitArea: {
-              show: true
-            }
+              show: false
+            },
+            show:ifMapPlus
           },
           yAxis: {
             type: 'category',
             data: axisData.yAxis,
             splitArea: {
               show: true
-            }
+            },
+            show:ifMapPlus
           },
           visualMap: {
             min: 0,
@@ -139,6 +145,7 @@ setup(){
             orient: 'horizontal',
             left: '10%',
             bottom: '5%',
+            show:ifMapPlus
           },
           series: [
             {
@@ -146,7 +153,7 @@ setup(){
               type: 'heatmap',
               data: axisData.valueArr,
               label: {
-                show: true
+                show: ifMapPlus
               },
               emphasis: {
                 itemStyle: {
@@ -166,37 +173,46 @@ setup(){
       }
      }
     }
-   onActivated(()=>{
+    onActivated(()=>{
       methods.mapDrawCanvas()
-   })
-  
+    })
+    // 挂载时自动调用一次
+    onMounted(()=>{
+      methods.mapDrawCanvas()
+    })    
     
     return{
         vNode,
         step,
         ifDraw,
         canvasName,
+        ifMapPlus,
         ...methods
     }
   }
 }
  </script>
 <style scoped>
-    .cacl-canvas{
-        width: 720px;
-        height: 500px;
-        margin: 100px 325px;
-        background-color: rgba(240, 240, 240, 0.1);
-        border-radius: 20px;
-        padding-right: 35px;
-    }
     .cacl-canvas-main{
+      width: 100%;
+      height: 100%;
       position: relative;
     }
+    .cacl-canvas{
+      width: 100%;
+      height: 100%;
+      background-color: rgba(240, 240, 240, 0.1);
+      border-radius: 20px;
+    }
+    .cacl-canvas /deep/ canvas{
+      margin-left: -10px!important
+    }
     .cacl-canvas-name{
+      width: 100%;
       position: absolute;
       top: 10px;
-      left: 40%;
+      left: 50%;
+      transform: translate(-50%,0);
       color: rgba(240, 240, 240, 0.8)
     }
     .cacl-canvas-option input{
@@ -207,6 +223,7 @@ setup(){
       color: white;
       position:absolute;
       bottom: 7%;
-      left: 45%
+      left: 50%;
+      transform: translate(-50%,0)
     }
 </style>

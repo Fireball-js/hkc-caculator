@@ -20,7 +20,7 @@
 </div>
 </template>
 <script>
-import { ref, watchEffect } from "vue"
+import { computed } from "vue"
 import {useStore} from "@/store/index"
 import { useRouter } from "vue-router"
  export default {
@@ -32,7 +32,9 @@ msg:'navbar for showing menu'
 setup(){
     const store=useStore()
     const router=useRouter()
-    const navbarActiveIndex= ref()
+    const navbarActiveIndex= computed(()=>{
+       return store.navbarActiveIndex
+    }) 
     const methods={
         handleSelect(_k){
             _k=_k*1
@@ -52,9 +54,7 @@ setup(){
             router.push("/")
         }
     }
-    watchEffect(()=>{
-        navbarActiveIndex.value=store.navbarActiveIndex
-    })
+    
    return{
     navbarActiveIndex,
     ...methods

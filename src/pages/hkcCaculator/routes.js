@@ -26,10 +26,10 @@ export default [
             {
                 path: "datacanvas",
                 name: "datacanvas",
-                component: () => import("@/pages/hkcCaculator/caculatorCanvas/CaculatorCanvas"),
+                component: () => import("@/pages/hkcCaculator/caculatorCanvas/CaculatorCanvasList"),
                 meta: {
                     "title": "数据canvas绘图页",
-                    "keepAlive": true
+                    "keepAlive": false
                 }
             },
             {

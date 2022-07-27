@@ -5,6 +5,8 @@ import { createPinia } from "pinia"
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 // 去除vue chrome默认阻止事件warning
 import 'default-passive-events'
+//引入外挂css
+import "@/assets/notify.css"
 const app = createApp(App)
 
 // 导入ElementUIIcons
